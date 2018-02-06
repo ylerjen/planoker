@@ -1,0 +1,22 @@
+<section class="user-place-page mt-5">
+  <form>
+    <div class="form-group">
+      <select class="custom-select" (change)="selectionChanged($event)">
+        <option value="?" selected>❓</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="5">5</option>
+        <option value="8">8</option>
+        <option value="13">13</option>
+        <option value="21">21</option>
+        <option value="34">34</option>
+        <option value="55">55</option>
+        <option value="break">☕</option>
+      </select>
+    </div>
+  </form>
+
+  <app-poker-card [value]="selectedValue"></app-poker-card>
+  <button class="btn btn-primary mt-3">Validate selection</button>
+</section>

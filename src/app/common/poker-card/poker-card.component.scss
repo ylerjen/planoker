@@ -1,0 +1,15 @@
+.poker-card {
+    background-color: #ccc;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px #a29d9d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    width: 200px;
+
+    h1 {
+        font-size: 6rem;
+    }
+}
