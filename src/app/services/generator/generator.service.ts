@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { UserGeneratorResponse } from '../../models/UserGeneratorResponse';
+import { genUUID } from '../../helpers/Uuid';
 
 const userGeneratorApi = 'https://randomuser.me/api/';
 
@@ -19,5 +20,9 @@ export class GeneratorService {
         const userArr = payload.results as Array<UserGeneratorResponse>;
         return userArr[0];
       });
+  }
+
+  genSessionId(): string {
+    return genUUID();
   }
 }
