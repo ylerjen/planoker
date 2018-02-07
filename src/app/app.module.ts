@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
+import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { appRoutes } from './router.config';
 import { AppComponent } from './app.component';
@@ -14,6 +16,8 @@ import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { UserPlacePageComponent } from './userplace/user-place-page/user-place-page.component';
 import { UserListComponent } from './dashboard/user-list/user-list.component';
 import { PokerCardComponent } from './common/poker-card/poker-card.component';
+import { FooterComponent } from './common/footer/footer.component';
+import { GeneratorService } from './services/generator/generator.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,8 @@ import { PokerCardComponent } from './common/poker-card/poker-card.component';
     DashboardComponent,
     UserPlacePageComponent,
     UserListComponent,
-    PokerCardComponent
+    PokerCardComponent,
+    FooterComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -34,9 +39,12 @@ import { PokerCardComponent } from './common/poker-card/poker-card.component';
       { enableTracing: true } // <-- debugging purposes only
     ),
     NgbModule.forRoot(),
-    BrowserModule
+    BrowserModule,
+    HttpModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [ GeneratorService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
