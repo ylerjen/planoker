@@ -7,3 +7,9 @@ export class ChangeSubjectCommand {
     sessionId: string;
     subject: string;
 }
+
+export class VoteCommand {
+    sessionId: string;
+    username: string;
+    vote: string;
+}
