@@ -1,5 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 import { GeneratorService } from '../../services/generator/generator.service';
 import { UserGeneratorResponse } from '../../models/UserGeneratorResponse';
 
@@ -13,7 +14,16 @@ export class JoinSessionFormComponent implements OnInit {
   @Output()
   public joinSessionEvent = new EventEmitter<string>();
 
-  public joinSessionForm: FormGroup;
+  public isLoading: boolean;
+  public isGeneratingUsername: boolean;
+
+  public joiningForm: FormGroup;
+
+  public formProp = {
+    username: {
+      maxLength: 30
+    }
+  };
 
   constructor(
     private _fb: FormBuilder,
@@ -25,24 +35,29 @@ export class JoinSessionFormComponent implements OnInit {
   }
 
   createForm() {
-    this.joinSessionForm = this._fb.group({
-      text: ['', Validators.required],
-      username: ['', Validators.maxLength(12)]
+    this.joiningForm = this._fb.group({
+      sessionId: ['', Validators.required],
+      username: ['', Validators.compose([Validators.required, Validators.maxLength(this.formProp.username.maxLength)])]
     });
   }
 
   onSubmit(event: Event) {
     event.preventDefault();
-    if (this.joinSessionForm.valid) {
-      this.joinSessionEvent.emit();
+    if (this.joiningForm.valid) {
+      this.joinSessionEvent.emit(this.joiningForm.value);
     }
   }
 
   setRandomUsername() {
+    this.isGeneratingUsername = true;
     this._genSrvc.genUsername().
       subscribe(
-        (resp: UserGeneratorResponse) => this.joinSessionForm.controls.username.setValue(resp.login.username),
-        (err) => alert('Can t generate a username')
+        (resp: UserGeneratorResponse) => {
+          const username = resp.login.username;
+          this.joiningForm.get('username').setValue(username);
+        },
+        (err) => alert('Can t generate a username'),
+        () => this.isGeneratingUsername = false
       );
   }
 }

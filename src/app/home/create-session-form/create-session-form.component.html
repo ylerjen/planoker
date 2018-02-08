@@ -1,12 +1,31 @@
-<form>
+<form [formGroup]="createSessionForm" (ngSubmit)="onSubmit($event)">
   <div class="form-group">
-    <label for="exampleInputEmail1">Session id</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <small id="emailHelp" class="form-text text-muted">If empty, a default id will be generated.</small>
+    <label for="creation-form_session-id">Session id</label>
+    <button class="btn btn-link btn-sm pull-right" (click)="setRandomId($event)">Generate</button>
+    <input
+      type="text"
+      formControlName="sessionId"
+      id="creation-form_session-id"
+      class="form-control"
+      aria-describedby="emailHelp"
+    >    
+    <div *ngIf="createSessionForm.controls.sessionId.errors && createSessionForm.controls.sessionId.errors.required"
+      class="invalid-feedback">
+      The session id is required
+    </div>
   </div>
   <div class="form-group">
     <label for="playerNb">Number of player</label>
-    <input type="number" class="form-control" id="playerNb">
+    <input
+      type="number"
+      formControlName="nbPlayers"
+      id="playerNb"
+      class="form-control"
+    >
+    <div *ngIf="createSessionForm.controls.nbPlayers.errors && createSessionForm.controls.nbPlayers.errors.required"
+      class="invalid-feedback">
+      The number of players is required
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary">Create session</button>
+  <button type="submit" class="btn btn-primary" [disabled]="!createSessionForm.valid">Create session</button>
 </form>

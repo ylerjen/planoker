@@ -1,1 +1,9 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+
+ // bootstrap need the form input invalid state to display correctly
+.invalid-feedback {
+  display: block;
+}
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}

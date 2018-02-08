@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { GeneratorService } from '../../services/generator/generator.service';
 
 @Component({
   selector: 'app-create-session-form',
@@ -7,9 +10,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateSessionFormComponent implements OnInit {
 
-  constructor() { }
+  @Output()
+  public createSessionEvent = new EventEmitter<string>();
+
+  @Input()
+  public isLoading: boolean;
+
+  public createSessionForm: FormGroup;
+
+  constructor(
+    private _fb: FormBuilder,
+    private _genSrvc: GeneratorService
+  ) { }
 
   ngOnInit() {
+    this.createForm();
+  }
+
+  createForm() {
+    this.createSessionForm = this._fb.group({
+      sessionId: ['', Validators.required],
+      nbPlayers: ['2', Validators.required]
+    });
+  }
+
+  onSubmit(event: Event) {
+    event.preventDefault();
+    if (this.createSessionForm.valid) {
+      this.createSessionEvent.emit(this.createSessionForm.value);
+    }
+  }
+
+
+  setRandomId() {
+    this.createSessionForm.get('sessionId').setValue(this._genSrvc.genSessionId());
   }
 
 }
