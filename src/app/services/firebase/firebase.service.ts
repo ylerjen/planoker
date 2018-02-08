@@ -3,7 +3,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/operators/map';
 
-import { JoinSessionCommand } from '../../models/FirebaseCommand';
+import { JoinSessionCommand, VoteCommand } from '../../models/FirebaseCommand';
 const sessionListNode = 'sessionlist';
 const userListNode = 'userlist';
 const usernameNode = 'username';
@@ -36,6 +36,12 @@ export class FirebaseService {
           }
         }
       );
+  }
+
+  storeVote(opts: VoteCommand) {
+    const pathToUser = `${sessionListNode}/${opts.sessionId}/${userListNode}/${opts.username}`;
+    const itemRef = this._fire.object(pathToUser);
+    itemRef.update({ vote: opts.vote });
   }
 
 }
