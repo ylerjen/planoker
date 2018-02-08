@@ -41,6 +41,10 @@ export class CreateSessionFormComponent implements OnInit {
     }
   }
 
+  onClickGenerateId(event: Event) {
+    event.preventDefault();
+    this.setRandomId();
+  }
 
   setRandomId() {
     this.createSessionForm.get('sessionId').setValue(this._genSrvc.genSessionId());

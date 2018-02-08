@@ -1,7 +1,7 @@
 <form [formGroup]="createSessionForm" (ngSubmit)="onSubmit($event)">
   <div class="form-group">
     <label for="creation-form_session-id">Session id</label>
-    <button class="btn btn-link btn-sm pull-right" (click)="setRandomId($event)">Generate</button>
+    <button class="btn btn-link btn-sm pull-right" (click)="onClickGenerateId($event)">Generate</button>
     <input
       type="text"
       formControlName="sessionId"
