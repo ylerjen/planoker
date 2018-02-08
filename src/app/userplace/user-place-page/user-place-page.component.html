@@ -1,4 +1,4 @@
-<section class="user-place-page mt-5">
+<section class="user-place-page mt-5" *ngIf="isPageReady">
   <form>
     <div class="form-group">
       <select class="custom-select" (change)="selectionChanged($event)">
@@ -17,6 +17,6 @@
     </div>
   </form>
 
-  <app-poker-card [value]="selectedValue"></app-poker-card>
-  <button class="btn btn-primary mt-3">Validate selection</button>
+  <app-poker-card [ngClass]="{ 'not-confirmed': !isConfirmed }" [value]="selectedValue"></app-poker-card>
+  <button (click)="onClickConfirmation($event)" class="btn btn-primary mt-3" [hidden]="isConfirmed">Validate selection</button>
 </section>
