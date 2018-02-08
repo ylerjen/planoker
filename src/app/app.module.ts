@@ -4,7 +4,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
+import { environment } from '../environments/environment';
 import { appRoutes } from './router.config';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home/home-page/home-page.component';
@@ -37,15 +41,21 @@ import { FirebaseService } from './services/firebase/firebase.service';
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      { enableTracing: false }, // <-- debugging purposes only
     ),
     NgbModule.forRoot(),
     BrowserModule,
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
-  providers: [ GeneratorService ],
+  providers: [
+    GeneratorService,
+    FirebaseService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
