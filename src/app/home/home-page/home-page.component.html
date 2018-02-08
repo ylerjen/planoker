@@ -3,6 +3,9 @@
     <h1 class="display-4">Planoker</h1>
     <p class="lead">The planoker app is a simple poker planning application.</p>
   </header>
+  <div>
+    {{ (dbcontent | async) | json }}
+  </div>
   <div class="card-deck mb-3">
     <section class="card mb-6 box-shadow">
       <header class="card-header text-center">
@@ -17,7 +20,7 @@
         <h2>Join existing session</h2>
       </header>
       <div class="card-body">
-          <app-join-session-form></app-join-session-form>
+          <app-join-session-form (joinSessionEvent)="onJoinEvent($event)"></app-join-session-form>
       </div>
     </section>
   </div>
