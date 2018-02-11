@@ -12,4 +12,5 @@ export class VoteCommand {
     sessionId: string;
     username: string;
     vote: string;
+    isFrozen: boolean;
 }
