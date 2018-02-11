@@ -41,7 +41,15 @@ export class FirebaseService {
   storeVote(opts: VoteCommand) {
     const pathToUser = `${sessionListNode}/${opts.sessionId}/${userListNode}/${opts.username}`;
     const itemRef = this._fire.object(pathToUser);
-    itemRef.update({ vote: opts.vote });
+    itemRef.update({ vote: opts.vote, isFrozen: opts.isFrozen });
+  }
+
+  getUserListForSession(sessionId: string): Observable<Object> {
+    if (!sessionListNode) {
+      return;
+    }
+    const pathToUserlist = `${sessionListNode}/${sessionId}/${userListNode}`;
+    return this._fire.object(pathToUserlist).valueChanges();
   }
 
 }
