@@ -1,7 +1,9 @@
 <section class="user-place-page mt-5" *ngIf="isPageReady">
   <form>
     <div class="form-group">
-      <select class="custom-select" (change)="selectionChanged($event)">
+      <select class="custom-select"
+        (change)="selectionChanged($event)"
+        [disabled]="isFrozen">
         <option value="?" selected>❓</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -17,6 +19,9 @@
     </div>
   </form>
 
-  <app-poker-card [ngClass]="{ 'not-confirmed': !isConfirmed }" [value]="selectedValue"></app-poker-card>
-  <button (click)="onClickConfirmation($event)" class="btn btn-primary mt-3" [hidden]="isConfirmed">Validate selection</button>
+  <app-poker-card class="mb-3" [ngClass]="{ 'not-confirmed': isFrozen }" [value]="selectedValue"></app-poker-card>
+  <button (click)="onClickFreeze($event)" class="btn btn-primary mb-3">
+    <span *ngIf="!isFrozen">Validate</span>
+    <span *ngIf="isFrozen">Unvalidate</span>
+  </button>
 </section>

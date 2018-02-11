@@ -27,48 +27,48 @@ const conversionObj = {
 export class UserPlacePageComponent implements OnInit {
 
   public selectOptions = conversionObj;
- 
-  public isConfirmed: boolean;
- 
+
+  public isFrozen: boolean;
+
   public isPageReady: boolean;
 
   public selectedValue = conversionObj['?'];
+
   private sessionId = '';
   private username = '';
 
   constructor(
     private _route: ActivatedRoute,
     private _fireSrvc: FirebaseService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    console.log('oninit');
     this._route.params
       .subscribe(
         (routeData: Params) => {
 
-    console.log('oninit ok ', routeData);
+          console.log('oninit ok ', routeData);
           this.sessionId = routeData.sid;
           this.username = routeData.uid;
           this.isPageReady = true;
         },
         (err) => console.error(err),
         () => this.isPageReady = true
-    );
+      );
   }
 
-  onClickConfirmation($event: Event) {
+  onClickFreeze($event: Event) {
+    this.isFrozen = !this.isFrozen;
     const voteCmd: VoteCommand = {
       username: this.username,
       sessionId: this.sessionId,
-      vote: this.selectedValue
+      vote: this.selectedValue,
+      isFrozen: this.isFrozen
     };
     this._fireSrvc.storeVote(voteCmd);
-    this.isConfirmed = true;
   }
 
   selectionChanged(evt: Event) {
-    this.isConfirmed = false;
     const selectEl = evt.target as HTMLSelectElement;
     this.selectedValue = conversionObj[selectEl.value];
   }

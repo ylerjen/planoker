@@ -1,6 +1,10 @@
 <section>
   <h1>Dashboard for the poker planning session</h1>
-  <p>session id</p>
+  <p>Session : {{sessionId}}</p>
+  
   <h2>User list</h2>
+  <ul *ngFor="let user of userlist">
+    <li>{{user | json }}</li>
+  </ul>
   <app-user-list></app-user-list>
 </section>
