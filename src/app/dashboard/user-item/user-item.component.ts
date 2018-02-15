@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 
+import { User } from '../../models/User';
+
 @Component({
   selector: 'app-user-item',
   templateUrl: './user-item.component.html',
@@ -8,7 +10,7 @@ import { Component, Input } from '@angular/core';
 export class UserItemComponent {
 
   @Input()
-  public user: Object;
+  public user: User;
 
   @Input()
   public isRevealed: boolean;
