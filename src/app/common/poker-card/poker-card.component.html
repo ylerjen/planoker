@@ -1,3 +1,10 @@
-<section class="poker-card">
-  <h1>{{value}}</h1>
+<section class="poker-card" [ngClass]="{ flipped: isFlipped }">
+  <div class="flipper">
+    <div class="flip-div recto">
+      <h1>{{value}}</h1>
+    </div>
+    <div class="flip-div verso">
+      <p>{{versoText}}</p>
+    </div>
+  </div>
 </section>

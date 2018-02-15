@@ -3,8 +3,5 @@
   <p>Session : {{sessionId}}</p>
   
   <h2>User list</h2>
-  <ul *ngFor="let user of userlist">
-    <li>{{user | json }}</li>
-  </ul>
-  <app-user-list></app-user-list>
+  <app-user-list [userlist]="userlist" [isRevealed]="isRevealed"></app-user-list>
 </section>

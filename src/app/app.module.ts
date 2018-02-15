@@ -23,6 +23,7 @@ import { PokerCardComponent } from './common/poker-card/poker-card.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { GeneratorService } from './services/generator/generator.service';
 import { FirebaseService } from './services/firebase/firebase.service';
+import { UserItemComponent } from './dashboard/user-item/user-item.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { FirebaseService } from './services/firebase/firebase.service';
     UserPlacePageComponent,
     UserListComponent,
     PokerCardComponent,
-    FooterComponent
+    FooterComponent,
+    UserItemComponent,
   ],
   imports: [
     RouterModule.forRoot(

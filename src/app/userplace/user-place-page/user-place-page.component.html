@@ -19,7 +19,11 @@
     </div>
   </form>
 
-  <app-poker-card class="mb-3" [ngClass]="{ 'not-confirmed': isFrozen }" [value]="selectedValue"></app-poker-card>
+  <app-poker-card class="mb-3"
+    [isFlipped]="isFrozen"
+    [value]="selectedValue"
+    versoText="Unvalidate your choice to change your vote"
+    ></app-poker-card>
   <button (click)="onClickFreeze($event)" class="btn btn-primary mb-3">
     <span *ngIf="!isFrozen">Validate</span>
     <span *ngIf="isFrozen">Unvalidate</span>

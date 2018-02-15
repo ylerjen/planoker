@@ -18,6 +18,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public sessionId: string;
 
+  public isRevealed: boolean;
+
   public userlist: Array<Object> = [];
 
   public refreshInterval$: ISubscription;
@@ -27,34 +29,35 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private _fireSrvc: FirebaseService
   ) { }
 
-    ngOnInit() {
-      this._route.params
-        .subscribe(
-          (routeData: Params) => {
-            this.sessionId = routeData.sid;
-            this.refreshUserList();
-            this.isLoading = true;
-          },
-          (err) => console.error(err),
-          () => this.isLoading = true
+  ngOnInit() {
+    this._route.params
+      .subscribe(
+      (routeData: Params) => {
+        this.sessionId = routeData.sid;
+        this.refreshUserList();
+        this.isLoading = true;
+      },
+      (err) => console.error(err),
+      () => this.isLoading = true
       );
 
-      this.refreshInterval$ = Observable.interval(500)
-        .subscribe(() => this.refreshUserList());
-    }
+    this.refreshInterval$ = Observable.interval(118000)
+      .subscribe(() => this.refreshUserList());
 
-    refreshUserList() {
-      this._fireSrvc.getUserListForSession(this.sessionId)
-        .subscribe(resp => {
-          const usernames = Object.keys(resp);
-          console.log(resp);
-          this.userlist =  usernames.map(
-            username => (Object.assign({ username }, resp[username]))
-          );
-        });
-    }
+      this.isRevealed = false;
+  }
 
-    ngOnDestroy() {
-      this.refreshInterval$.unsubscribe();
-     }
+  refreshUserList() {
+    this._fireSrvc.getUserListForSession(this.sessionId)
+      .subscribe(resp => {
+        const usernames = Object.keys(resp);
+        this.userlist = usernames.map(
+          username => (Object.assign({ username }, resp[username]))
+        );
+      });
+  }
+
+  ngOnDestroy() {
+    this.refreshInterval$.unsubscribe();
+  }
 }

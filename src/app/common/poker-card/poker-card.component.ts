@@ -9,4 +9,10 @@ export class PokerCardComponent {
 
   @Input()
   public value: string;
+
+  @Input()
+  public isFlipped: boolean;
+
+  @Input()
+  public versoText: string;
 }

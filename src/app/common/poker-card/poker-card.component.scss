@@ -1,15 +1,65 @@
+$height: 300px;
+$width: 200px;
 .poker-card {
-    background-color: #ccc;
-    border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: 5px 5px 10px #a29d9d;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 300px;
-    width: 200px;
+  position: relative;
+  height: $height;
+  width: $width;
+  margin: auto;
+  z-index: 1;
+  perspective: 1000; // entire container, keeps perspective
+} // flip the pane when hovered
+.poker-card.flipped .flipper {
+  transform: rotateY(180deg);
+}
 
+.flipper {
+  //flip speed
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+  .flip-div {
+    backface-visibility: hidden;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-sizing: border-box; // hide back of pane during swap
+    height: $height;
+    left: 0;
+    margin: auto;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+} //
+.recto {
+    background-color: white;
+    border: 2px solid black;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotateY(0deg);
+    z-index: 2;
     h1 {
-        font-size: 6rem;
+        font-size: 5rem;
+    }
+} // back, initially hidden pane
+.verso {
+    background: #1e5799;
+    /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
+    color: white;
+    display: block;
+    transform: rotateY(180deg);
+    
+    p {
+        text-align: center;
     }
 }

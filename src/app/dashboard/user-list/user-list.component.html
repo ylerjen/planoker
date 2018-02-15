@@ -1,3 +1,7 @@
-<p>
-  user-list works!
-</p>
+<div class="container-fluid">
+  <ul class="user-list row">
+    <li *ngFor="let user of userlist" class="col">
+      <app-user-item [user]="user" [isRevealed]="isRevealed"></app-user-item>
+    </li>
+  </ul>
+</div>
