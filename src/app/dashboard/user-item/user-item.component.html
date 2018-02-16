@@ -1,9 +1,9 @@
 <section>
   <h1>{{ user.username }}</h1>
-  <i class="fa fa-hourglass" *ngIf="user.isFrozen"></i>
   <app-poker-card class="user-card"
     [isFlipped]="!isRevealed"
     [value]="user.vote"
     [versoText]="(user.isFrozen) ? 'Voting...':'Ready !'"
+    size="small"
     ></app-poker-card>
 </section>
