@@ -1,9 +1,9 @@
-<section>
-  <h1>{{ user.username }}</h1>
+<section class="user-item">
+  <h4 class="user-item-title"><span class="ready-state" [ngClass]="{on: user.isFrozen, off: !user.isFrozen }">&nbsp;</span> {{ user.username }}</h4>
   <app-poker-card class="user-card"
     [isFlipped]="!isRevealed"
     [value]="user.vote"
-    [versoText]="(user.isFrozen) ? 'Voting...':'Ready !'"
+    [versoText]="(user.isFrozen) ? 'Ready !' : 'Voting...'"
     size="small"
     ></app-poker-card>
 </section>

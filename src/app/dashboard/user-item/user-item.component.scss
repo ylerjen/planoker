@@ -1,0 +1,27 @@
+.user-item {
+    border: 1px solid lightgrey;
+    padding: 10px;
+    justify-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.user-item-title {
+    margin: .5em 0;
+}
+.ready-state {
+    border-radius: 50%;
+    width: 28px;
+    display: inline-block;
+    margin: 10px;
+
+    &.on {
+      background-color: greenyellow;
+    }
+
+    &.off {
+      background-color: red;
+    }
+
+}
