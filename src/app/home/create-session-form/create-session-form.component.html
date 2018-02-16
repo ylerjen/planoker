@@ -2,29 +2,27 @@
   <div class="form-group">
     <label for="creation-form_session-id">Session id</label>
     <button class="btn btn-link btn-sm pull-right" (click)="onClickGenerateId($event)">Generate</button>
-    <input
-      type="text"
-      formControlName="sessionId"
-      id="creation-form_session-id"
-      class="form-control"
-      aria-describedby="emailHelp"
-    >    
-    <div *ngIf="createSessionForm.controls.sessionId.errors && createSessionForm.controls.sessionId.errors.required"
-      class="invalid-feedback">
+    <input type="text" formControlName="sessionId" id="creation-form_session-id" class="form-control" aria-describedby="emailHelp">
+    <div *ngIf="createSessionForm.controls.sessionId.errors && createSessionForm.controls.sessionId.errors.required" class="invalid-feedback">
       The session id is required
     </div>
   </div>
   <div class="form-group">
-    <label for="playerNb">Number of player</label>
-    <input
-      type="number"
-      formControlName="nbPlayers"
-      id="playerNb"
+    <label for="create-session-username" id="username">Your name</label>
+    <button class="btn btn-link btn-sm pull-right" (click)="setRandomUsername($event)">Generate
+      <i class="fa fa-refresh fa-spin" *ngIf="isGeneratingUsername"></i>
+    </button>
+    <input 
+      type="text" 
+      formControlName="username" 
+      id="create-session-username" 
       class="form-control"
-    >
-    <div *ngIf="createSessionForm.controls.nbPlayers.errors && createSessionForm.controls.nbPlayers.errors.required"
-      class="invalid-feedback">
-      The number of players is required
+      placeholder="Enter your name"
+      [maxlength]="formProp.username.maxLength"
+      aria-describedby="username">
+    <div *ngIf="createSessionForm.controls.username.errors" class="invalid-feedback">
+      <p *ngIf="createSessionForm.controls.username.errors && createSessionForm.controls.username.errors.required">Username is required</p>
+      <p *ngIf="createSessionForm.controls.username.errors && createSessionForm.controls.username.errors.maxlength">Username's length {{createSessionForm.controls.username.errors.maxlength.actualLength}} exceed the limit of {{createSessionForm.controls.username.errors.maxlength.requiredLength}}</p>
     </div>
   </div>
   <button type="submit" class="btn btn-primary" [disabled]="!createSessionForm.valid">Create session</button>
