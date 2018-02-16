@@ -1,15 +1,37 @@
-$height: 300px;
-$width: 200px;
+$sm-height: 100px;
+$sm-width: 75px;
+$sm-border-radius: 5px;
+
+$md-height: 180px;
+$md-width: 120px;
+$md-border-radius: 8px;
+
+$lg-height: 300px;
+$lg-width: 200px;
+$lg-border-radius: 10px;
+
 .poker-card {
   position: relative;
-  height: $height;
-  width: $width;
+  height: $md-height;
+  width: $md-width;
   margin: auto;
   z-index: 1;
   perspective: 1000; // entire container, keeps perspective
-} // flip the pane when hovered
-.poker-card.flipped .flipper {
-  transform: rotateY(180deg);
+
+  &.sm {
+    height: $sm-height;
+    width: $sm-width;
+  }
+
+  &.lg {
+    height: $lg-height;
+    width: $lg-width;
+  }
+
+  // flip the pane when having .flipper class
+  &.flipped .flipper {
+    transform: rotateY(180deg);
+  }
 }
 
 .flipper {
@@ -20,17 +42,31 @@ $width: 200px;
   .flip-div {
     backface-visibility: hidden;
     border: 1px solid black;
-    border-radius: 10px;
+    border-radius: $md-border-radius;
     box-sizing: border-box; // hide back of pane during swap
-    height: $height;
+    height: $md-height;
     left: 0;
     margin: auto;
     padding: 10px;
     position: absolute;
     top: 0;
     width: 100%;
+
+    .sm & {
+      height: $sm-height;
+      border-radius: $sm-border-radius;
+    }
+
+    .lg & {
+      height: $lg-height;
+      border-radius: $lg-border-radius;
+    }
+
   }
-} //
+}
+
+
+
 .recto {
     background-color: white;
     border: 2px solid black;
@@ -41,7 +77,16 @@ $width: 200px;
     transform: rotateY(0deg);
     z-index: 2;
     h1 {
+      font-size: 4rem;
+
+      .sm & {
+        font-size: 3rem
+      }
+
+      .lg & {
         font-size: 5rem;
+
+      }
     }
 } // back, initially hidden pane
 .verso {

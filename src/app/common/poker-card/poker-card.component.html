@@ -1,4 +1,6 @@
-<section class="poker-card" [ngClass]="{ flipped: isFlipped }">
+<section
+  class="poker-card"
+  [ngClass]="{ flipped: isFlipped, sm: size==='small', lg: size==='large' }">
   <div class="flipper">
     <div class="flip-div recto">
       <h1>{{value}}</h1>
