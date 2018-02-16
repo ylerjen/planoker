@@ -4,12 +4,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { environment } from '../environments/environment';
 import { appRoutes } from './router.config';
+import { globalState } from './stores/app.state';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home/home-page/home-page.component';
 import { SessionPageComponent } from './dashboard/session-page/session-page.component';
@@ -38,26 +41,29 @@ import { UserItemComponent } from './dashboard/user-item/user-item.component';
     UserListComponent,
     PokerCardComponent,
     FooterComponent,
-    UserItemComponent,
+    UserItemComponent
   ],
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: false }, // <-- debugging purposes only
+      { enableTracing: false } // <-- debugging purposes only
     ),
     NgbModule.forRoot(),
     BrowserModule,
     HttpModule,
+    StoreModule.forRoot(globalState),
+    StoreDevtoolsModule.instrument({
+      // for redux debug => storeDevtools instrument
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production // Restrict extension to log-only mode
+    }),
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [
-    GeneratorService,
-    FirebaseService
-  ],
+  providers: [GeneratorService, FirebaseService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
