@@ -2,9 +2,11 @@
   <form>
     <div class="form-group">
       <select class="custom-select"
+        name="vote"
+        [(ngModel)]="selectedValue"
         (change)="selectionChanged($event)"
-        [disabled]="isFrozen">
-        <option value="?" selected>❓</option>
+        [disabled]="currUser.isFrozen">
+        <option value="?">❓</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -20,13 +22,13 @@
   </form>
 
   <app-poker-card class="mb-3"
-    [isFlipped]="isFrozen"
+    [isFlipped]="currUser.isFrozen"
     [value]="selectedValue"
     size="large"
     versoText="Unvalidate your choice to change your vote"
     ></app-poker-card>
   <button (click)="onClickFreeze($event)" class="btn btn-primary mb-3">
-    <span *ngIf="!isFrozen">Validate</span>
-    <span *ngIf="isFrozen">Unvalidate</span>
+    <span *ngIf="!currUser.isFrozen">Validate</span>
+    <span *ngIf="currUser.isFrozen">Unvalidate</span>
   </button>
 </section>

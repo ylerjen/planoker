@@ -3,9 +3,13 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import { IUserlistState } from '../../stores/reducers/userlist/userlist.reducer';
+import {
+  IUserlistState,
+  addUserAction
+} from '../../stores/reducers/userlist/userlist.reducer';
 import { VoteCommand } from '../../models/FirebaseCommand';
 import { User } from '../../models/User';
+import { Session } from '../../models/Session';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 
 const conversionObj = {
@@ -30,13 +34,13 @@ const conversionObj = {
 export class UserPlacePageComponent implements OnInit, OnDestroy {
     public selectOptions = conversionObj;
 
-    public currUser: User;
+    public currUser = new User();
 
     public isPageReady: boolean;
 
-    public selectedValue = conversionObj['?'];
+    public selectedValue: string;
 
-    private sessionId = '';
+    private session: Session;
 
     private _userlistStoreSubs$;
 
@@ -47,25 +51,35 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
+        this._route.params
+          .switchMap((routeData: Params) => {
+            this.session = new Session({
+              sessionId: routeData.sid,
+              username: routeData.uid
+            });
+            return this._fireSrvc.fetchUserInfo(this.session.sessionId, this.session.username);
+          })
+          .subscribe(
+            resp => this._store.dispatch(addUserAction(resp)),
+            err => console.error(err)
+          );
+
         this._userlistStoreSubs$ = this._store
-            .select('userlistState')
-            .subscribe(refreshValuesFromStore);
-        this._route.params.subscribe(
-            (routeData: Params) => {
-                console.log('oninit ok ', routeData);
-                this.sessionId = routeData.sid;
-                this.currUser.username = routeData.uid;
-                this.isPageReady = true;
-            },
-            err => console.error(err),
-            () => (this.isPageReady = true)
-        );
+          .select('userlistState')
+          .subscribe(resp => {
+            this.refreshValuesFromStore(resp);
+          });
     }
 
     refreshValuesFromStore(val: IUserlistState) {
-        const currUser = val.userList[this.currUser.username];
-        currUser.username = this.currUser.username;
-        this.currUser = currUser;
+      if (val && val.userList && this.currUser) {
+        const currUser = val.userList.find(u => u.username === this.session.username);
+        if (currUser) {
+          this.currUser = currUser;
+          this.selectedValue = currUser.vote;
+          this.isPageReady = true;
+        }
+      }
     }
 
     ngOnDestroy() {
@@ -75,8 +89,8 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
     onClickFreeze($event: Event) {
         this.currUser.isFrozen = !this.currUser.isFrozen;
         const voteCmd: VoteCommand = {
-          username: this.currUser.username,
-          sessionId: this.sessionId,
+          username: this.session.username,
+          sessionId: this.session.sessionId,
           vote: this.selectedValue,
           isFrozen: this.currUser.isFrozen};
         this._fireSrvc.storeVote(voteCmd);
