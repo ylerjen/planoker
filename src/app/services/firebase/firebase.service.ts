@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/operators/map';
 
 import { JoinSessionCommand, VoteCommand } from '../../models/FirebaseCommand';
+import { User } from '../../models/User';
 const sessionListNode = 'sessionlist';
 const userListNode = 'userlist';
 const usernameNode = 'username';
@@ -20,6 +21,19 @@ export class FirebaseService {
 
   fetchSessionInfo(sessionId: string): Observable<Object> {
     return this._fire.object(`${sessionListNode}/${sessionId}`).valueChanges();
+  }
+
+  fetchUserInfo(sessionId: string, username: string): Observable<User> {
+    return this._fire
+      .object(
+        `${sessionListNode}/${sessionId}/${userListNode}/${username}`
+      )
+      .valueChanges()
+      .map(userValues => {
+        const u = new User(userValues);
+        u.username = username;
+        return u;
+      });
   }
 
   joinSession(opts: JoinSessionCommand): Observable<void> {
