@@ -13,11 +13,11 @@ export function sessionReducer(state: ISessionState = initialState, action: Acti
            switch (action.type) {
                case SET_SESSION_ID:
                    throw new Error('not implemented');
-                   return state;
+                   // return state;
 
                case SET_USERNAME:
                    throw new Error('not implemented');
-                   return state;
+                   // return state;
 
                default:
                    return state;
