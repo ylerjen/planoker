@@ -9,10 +9,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { EffectsModule } from '@ngrx/effects';
 
 import { environment } from '../environments/environment';
 import { appRoutes } from './router.config';
 import { globalState } from './stores/app.state';
+import { UserEffects } from './effects/user.effect';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home/home-page/home-page.component';
 import { SessionPageComponent } from './dashboard/session-page/session-page.component';
@@ -49,6 +51,7 @@ import { UserItemComponent } from './dashboard/user-item/user-item.component';
       { enableTracing: false } // <-- debugging purposes only
     ),
     NgbModule.forRoot(),
+    EffectsModule.forRoot([UserEffects]),
     BrowserModule,
     HttpModule,
     StoreModule.forRoot(globalState),
