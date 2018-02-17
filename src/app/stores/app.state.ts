@@ -1,3 +1,5 @@
+import { Action } from '@ngrx/store';
+
 import {
   IUserlistState,
   userlistReducer
@@ -15,3 +17,7 @@ export const globalState = {
   userlistState: userlistReducer,
   sessionState: sessionReducer,
 };
+
+export interface UnsafeAction extends Action {
+  payload?: any;
+}
