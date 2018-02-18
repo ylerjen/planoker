@@ -43,6 +43,7 @@ $lg-border-radius: 10px;
     backface-visibility: hidden;
     border: 1px solid black;
     border-radius: $md-border-radius;
+    box-shadow: 0 0 10px 5px #acacac;
     box-sizing: border-box; // hide back of pane during swap
     height: $md-height;
     left: 0;
