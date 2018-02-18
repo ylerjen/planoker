@@ -10,15 +10,13 @@
       </select>
     </div>
   </form>
-
-  <app-poker-card class="mb-3"
-    [isFlipped]="currUser.isFrozen"
-    [value]="selectedValue"
-    size="large"
-    versoText="Unvalidate your choice to change your vote"
-    ></app-poker-card>
-  <button (click)="onClickFreeze($event)" class="btn btn-primary mb-3">
-    <span *ngIf="!currUser.isFrozen">Validate</span>
-    <span *ngIf="currUser.isFrozen">Unvalidate</span>
+  <p class="text-muted">Click the card to un-/validate your vote</p>
+  <button (click)="onClickFreeze($event)" class="card-is-btn">
+    <app-poker-card class="mb-3"
+      [isFlipped]="currUser.isFrozen"
+      [value]="selectedValue"
+      size="large"
+      versoText="Unvalidate your choice to change your vote"
+      ></app-poker-card>
   </button>
 </section>
