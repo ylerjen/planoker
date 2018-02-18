@@ -12,6 +12,7 @@ import { VoteCommand } from '../../models/FirebaseCommand';
 import { User } from '../../models/User';
 import { Session } from '../../models/Session';
 import { FirebaseService, votableValues } from '../../services/firebase/firebase.service';
+import { ISessionState } from '../../stores/reducers/session/session.reducer';
 
 @Component({
     selector: 'app-user-place-page',
@@ -29,9 +30,10 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
 
     public selectableValues = votableValues;
 
-    private session: Session;
+    private session: ISessionState;
 
     private _userlistStoreSubs$: ISubscription;
+    private _sessionStoreSubs$: ISubscription;
 
     constructor(
         private _route: ActivatedRoute,
@@ -41,6 +43,11 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this._userlistStoreSubs$ = this._store
+            .select('sessionState')
+            .subscribe((sessionState: ISessionState) => {
+                this.session = sessionState;
+            });
+        this._sessionStoreSubs$ = this._store
             .select('userlistState')
             .subscribe(resp => {
                 this.refreshValuesFromStore(resp);
@@ -53,10 +60,7 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
                         username: routeData.uid
                     });
                     this._store.dispatch(initUserStore(this.session.sessionId));
-                    this._store.dispatch(initSessionStore({
-                        sessionId: this.session.sessionId,
-                        username: this.session.username,
-                    }));
+                    this._store.dispatch(initSessionStore(this.session));
                     this.isPageReady = true;
                 },
                 err => console.error(err)
@@ -73,7 +77,10 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
      */
     refreshValuesFromStore(val: IUserlistState) {
         console.log('refresh from store', val);
-        if (val && val.userList && this.currUser) {
+        if (!this.session.sessionId || !this.session.username) {
+            return;
+        }
+        if (val.userList && this.currUser) {
             const currUser = val.userList.find(u => u.username === this.session.username);
             if (currUser) {
                 this.currUser = currUser;
@@ -96,6 +103,6 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
 
     selectionChanged(evt: Event) {
         const selectEl = evt.target as HTMLSelectElement;
-        this.selectedValue = votableValues[selectEl.value];
+        this.selectedValue = selectEl.value;
     }
 }
