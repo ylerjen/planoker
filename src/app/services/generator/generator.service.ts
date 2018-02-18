@@ -11,7 +11,9 @@ const userGeneratorApi = 'https://randomuser.me/api/';
 @Injectable()
 export class GeneratorService {
 
-  constructor( private _http: Http ) { }
+  constructor(
+    private _http: Http
+  ) { }
 
   genUsername(): Observable<UserGeneratorResponse> {
     return this._http.get(userGeneratorApi)
@@ -23,6 +25,10 @@ export class GeneratorService {
   }
 
   genSessionId(): string {
+    return this.genUUID();
+  }
+
+  genUUID(): string {
     return genUUID();
   }
 }

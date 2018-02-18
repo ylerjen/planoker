@@ -38,6 +38,24 @@ export class FirebaseService {
             });
     }
 
+    createSessionWithUser(opts: JoinSessionCommand): Observable<void> {
+        const pathToSessionList = `${sessionListNode}`;
+        return this._fire.object(pathToSessionList).valueChanges()
+            .map(
+                (sessionListObj: { [key: string]: any }) => {
+                    if (sessionListObj[opts.sessionId]) {
+                        throw new Error(`Session ${opts.sessionId} already exist`);
+                    }
+                    const itemRef = this._fire.object(`${pathToSessionList}/${opts.sessionId}`);
+                    const sessionInitialObj = {
+                        isRevealed: false,
+                        [`userlist/${opts.username}/isFrozen`]: false
+                    };
+                    itemRef.update(sessionInitialObj);
+                }
+            );
+    }
+
     joinSession(opts: JoinSessionCommand): Observable<void> {
         const pathToSessionId = `${sessionListNode}/${opts.sessionId}`;
         return this._fire.object(pathToSessionId).valueChanges()

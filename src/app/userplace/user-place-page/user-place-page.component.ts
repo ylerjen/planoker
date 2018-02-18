@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { ISubscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 
 import { IUserlistState } from '../../stores/reducers/userlist/userlist.reducer';
-import { updateUserAction, initUserStore } from '../../actions/user.action';
+import { initUserStore } from '../../actions/user.action';
+import { initSessionStore } from '../../actions/session.action';
 import { IGlobalState } from '../../stores/app.state';
 import { VoteCommand } from '../../models/FirebaseCommand';
 import { User } from '../../models/User';
@@ -29,7 +31,7 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
 
     private session: Session;
 
-    private _userlistStoreSubs$;
+    private _userlistStoreSubs$: ISubscription;
 
     constructor(
         private _route: ActivatedRoute,
@@ -38,6 +40,11 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
+        this._userlistStoreSubs$ = this._store
+            .select('userlistState')
+            .subscribe(resp => {
+                this.refreshValuesFromStore(resp);
+            });
         this._route.params
             .subscribe(
                 (routeData: Params) => {
@@ -46,15 +53,14 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
                         username: routeData.uid
                     });
                     this._store.dispatch(initUserStore(this.session.sessionId));
+                    this._store.dispatch(initSessionStore({
+                        sessionId: this.session.sessionId,
+                        username: this.session.username,
+                    }));
+                    this.isPageReady = true;
                 },
                 err => console.error(err)
             );
-
-        this._userlistStoreSubs$ = this._store
-            .select('userlistState')
-            .subscribe(resp => {
-                this.refreshValuesFromStore(resp);
-            });
     }
 
     ngOnDestroy() {
@@ -66,6 +72,7 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
      * @param val - the current userlist state from the store
      */
     refreshValuesFromStore(val: IUserlistState) {
+        console.log('refresh from store', val);
         if (val && val.userList && this.currUser) {
             const currUser = val.userList.find(u => u.username === this.session.username);
             if (currUser) {

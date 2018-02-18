@@ -14,6 +14,7 @@ import {
   UPDATE_USER_START,
   UPDATE_USER_SUCCESS,
   UpdateUserAction,
+  InitUserAction
 } from '../actions/user.action';
 import { FirebaseService } from '../services/firebase/firebase.service';
 
@@ -30,9 +31,9 @@ export class UserEffects {
   @Effect() initUserStore$: Observable<Action> = this.actions$.pipe(
     ofType(INIT_USER_STORE_START),
     mergeMap(
-      action => {
+      (action: InitUserAction) => {
         // alert(ADD_USER);
-        return this._fireSrvc.getUserListForSession('dasga'/*action.payload*/).pipe(
+        return this._fireSrvc.getUserListForSession(action.payload).pipe(
           // If successful, dispatch success action with result
           map(data => {
             // convert object to array

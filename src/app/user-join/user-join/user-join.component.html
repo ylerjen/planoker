@@ -1,0 +1,20 @@
+<div class="col-lg-5">
+  <section class="card mt-5">
+    <header class="card-header">
+      <h1 class="card-title">Choose your name</h1>
+    </header>
+    <form [formGroup]="userJoinForm" (ngSubmit)="onSubmit($event)" class="card-body">
+      <div class="form-group">
+        <label for="join-form_username-{{id}}">Username</label>
+        <button class="btn btn-link btn-sm pull-right" (click)="setRandomUsername($event)">Generate
+          <i class="fa fa-refresh fa-spin" *ngIf="isGeneratingUsername"></i>
+        </button>
+        <input type="text" formControlName="username" id="join-form_username-{{id}}" class="form-control">
+        <div *ngIf="userJoinForm.controls.username.errors && userJoinForm.controls.username.errors.required" class="invalid-feedback">
+          The username is required
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="!userJoinForm.valid">Join the session</button>
+    </form>
+  </section>
+</div>

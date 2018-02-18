@@ -34,6 +34,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public userlist: Array<User> = [];
 
+  public joinUrl: string;
+
   private refreshInterval$: ISubscription;
   private userStoreSub$: ISubscription;
 
@@ -68,6 +70,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       (routeData: Params) => {
         this.sessionId = routeData.sid;
         this.refreshUserList();
+        this.defineJoinUrl();
         this.isLoading = true;
       },
       err => console.error(err),
@@ -79,6 +82,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
 
     this.isRevealed = false;
+  }
+
+  defineJoinUrl() {
+    this.joinUrl = window.location.origin + `/session/${this.sessionId}/user`;
   }
 
   ngOnDestroy() {

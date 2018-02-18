@@ -1,13 +1,12 @@
 <nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" routerLink="/" routerLinkActive="active">&#9824; Planoker</a>
-
   <div class="navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="/session/1" routerLinkActive="active">Temp link to dashboard</a>
+      <li class="nav-item active" *ngIf="sessionId">
+        <a class="nav-link" routerLink="/session/{{sessionId}}" routerLinkActive="active">Temp link to dashboard</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/session/1/user/2" routerLinkActive="active">Temp link to user 1</a>
+      <li class="nav-item" *ngIf="username">
+        <a class="nav-link" routerLink="/session/{{sessionId}}/user/{{username}}" routerLinkActive="active">Temp link to user 1</a>
       </li>
     </ul>
   </div>

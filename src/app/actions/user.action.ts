@@ -22,11 +22,14 @@ export function initUserStore(sessionId: string) {
     };
 }
 
-export function updateUserAction(payload: VoteCommand): UpdateUserAction {
+export function updateUser(payload: VoteCommand): UpdateUserAction {
     return {
         type: UPDATE_USER_START,
         payload
     };
+}
+export interface InitUserAction extends Action {
+    payload: any;
 }
 
 export interface UpdateUserAction extends Action {

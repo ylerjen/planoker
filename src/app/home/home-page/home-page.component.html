@@ -4,14 +4,16 @@
     <p class="lead">The planoker app is a simple poker planning application.</p>
   </header>
   <div class="card-deck mb-3">
+
     <section class="card mb-6 box-shadow">
       <header class="card-header text-center">
         <h2>Create session</h2>
       </header>
       <div class="card-body">
-        <app-create-session-form></app-create-session-form>
+        <app-create-session-form (createSessionEvent)="onCreateEvent($event)"></app-create-session-form>
       </div>
     </section>
+
     <section class="card mb-6 box-shadow">
       <header class="card-header text-center">
         <h2>Join existing session</h2>
@@ -20,6 +22,7 @@
         <app-join-session-form (joinSessionEvent)="onJoinEvent($event)"></app-join-session-form>
       </div>
     </section>
+    
   </div>
   <div>
     {{ (dbcontent | async) | json }}

@@ -1,20 +1,33 @@
-<section>
-  <h1>Dashboard for the poker planning session</h1>
-  <p>Session : {{sessionId}}</p>
-  
-  <h2>User list</h2>
-  <app-user-list [userlist]="userlist" [isRevealed]="isRevealed"></app-user-list>
-  <div class="text-center" *ngIf="userlist && userlist.length">
-    <button class="btn btn-primary" (click)="revealVotes($event)" [disabled]="!isReadyToReveal">Reveal votes !</button>
-  </div>
+<div>
+  <section>
+    <h1>Dashboard</h1>
+    <div class="session-detail">
+      <div *ngIf="joinUrl">
+        <qr-code [value]="joinUrl" [size]="100"></qr-code>
+      </div>
+      <p class="ml-3">Session : {{sessionId}}</p>
+    </div>
+  </section>
+  <section class="mt-5">
+    <h2>User list</h2>
+    <app-user-list [userlist]="userlist" [isRevealed]="isRevealed"></app-user-list>
+    <div class="text-center" *ngIf="userlist && userlist.length">
+      <button class="btn btn-primary" (click)="revealVotes($event)" [disabled]="!isReadyToReveal">Reveal votes !</button>
+    </div>
+  </section>
   <section class="stats" *ngIf="isRevealed">
     <h3>Stats</h3>
-    <dl>
-      <dt>Avg</dt><dd>{{stats.avg}}</dd>
-      <dt>Min</dt><dd>{{stats.min}}</dd>
-      <dt>Max</dt><dd>{{stats.max}}</dd>
-      <dt>Nb of Coffee</dt><dd>{{stats.nbOfCoffee}}</dd>
-      <dt>Nb of Question mark</dt><dd>{{stats.nbOfQuestionMark}}</dd>
+    <dl class="row">
+      <dt class="col">Avg</dt>
+      <dd>{{stats.avg}}</dd>
+      <dt>Min</dt>
+      <dd>{{stats.min}}</dd>
+      <dt>Max</dt>
+      <dd>{{stats.max}}</dd>
+      <dt>Nb of Coffee</dt>
+      <dd>{{stats.nbOfCoffee}}</dd>
+      <dt>Nb of Question mark</dt>
+      <dd>{{stats.nbOfQuestionMark}}</dd>
     </dl>
   </section>
-</section>
+</div>

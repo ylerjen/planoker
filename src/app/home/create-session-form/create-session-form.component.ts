@@ -5,9 +5,9 @@ import { GeneratorService } from '../../services/generator/generator.service';
 import { UserGeneratorResponse } from '../../models/UserGeneratorResponse';
 
 @Component({
-  selector: "app-create-session-form",
-  templateUrl: "./create-session-form.component.html",
-  styleUrls: ["./create-session-form.component.scss"]
+  selector: 'app-create-session-form',
+  templateUrl: './create-session-form.component.html',
+  styleUrls: ['./create-session-form.component.scss']
 })
 export class CreateSessionFormComponent implements OnInit {
   @Output() public createSessionEvent = new EventEmitter<string>();
@@ -24,7 +24,10 @@ export class CreateSessionFormComponent implements OnInit {
     }
   };
 
-  constructor(private _fb: FormBuilder, private _genSrvc: GeneratorService) {}
+  constructor(
+    private _fb: FormBuilder,
+    private _genSrvc: GeneratorService
+  ) {}
 
   ngOnInit() {
     this.createForm();
@@ -32,8 +35,8 @@ export class CreateSessionFormComponent implements OnInit {
 
   createForm() {
     this.createSessionForm = this._fb.group({
-      sessionId: ["", Validators.required],
-      username: ["", Validators.required]
+      sessionId: ['', Validators.required],
+      username: ['', Validators.required]
     });
   }
 
@@ -51,7 +54,7 @@ export class CreateSessionFormComponent implements OnInit {
 
   setRandomId() {
     this.createSessionForm
-      .get("sessionId")
+      .get('sessionId')
       .setValue(this._genSrvc.genSessionId());
   }
 
@@ -60,9 +63,9 @@ export class CreateSessionFormComponent implements OnInit {
     this._genSrvc.genUsername().subscribe(
       (resp: UserGeneratorResponse) => {
         const username = resp.login.username;
-        this.createSessionForm.get("username").setValue(username);
+        this.createSessionForm.get('username').setValue(username);
       },
-      err => alert("Can t generate a username"),
+      err => alert('Can t generate a username'),
       () => (this.isGeneratingUsername = false)
     );
   }
