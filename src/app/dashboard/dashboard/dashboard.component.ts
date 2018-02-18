@@ -118,12 +118,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
    * Set the stats according to the user votes
    */
   setStats() {
-    const arrOfNbOnly = this.userlist.map(u => +u.vote).filter(v => v !== NaN);
-
+        const arrOfNbOnly = this.userlist
+            .map(u => +u.vote)
+            .filter(v => !Object.is(NaN, v));
+        if (arrOfNbOnly.length === 0) {
+            this.stats.avg = NaN;
+            this.stats.max = NaN;
+            this.stats.min = NaN;
+        } else if (arrOfNbOnly.length === 1) {
+            this.stats.avg = arrOfNbOnly[0];
+            this.stats.max = arrOfNbOnly[0];
+            this.stats.min = arrOfNbOnly[0];
+        } else {
+            this.stats.avg = arrOfNbOnly.reduce((tot, v) => tot + v) / arrOfNbOnly.length;
     this.stats.max = arrOfNbOnly.reduce((max, v) => Math.max(max, v));
     this.stats.min = arrOfNbOnly.reduce((min, v) => Math.min(min, v));
-    this.stats.avg =
-      arrOfNbOnly.reduce((tot, v) => tot + v) / arrOfNbOnly.length;
+        }
     this.stats.nbOfCoffee = this.userlist.filter(v => v.vote === '☕').length;
     this.stats.nbOfQuestionMark = this.userlist.filter(
       v => v.vote === '❓'
