@@ -58,7 +58,8 @@ export class CreateSessionFormComponent implements OnInit {
       .setValue(this._genSrvc.genSessionId());
   }
 
-  setRandomUsername() {
+  setRandomUsername(evt: Event) {
+    evt.preventDefault();
     this.isGeneratingUsername = true;
     this._genSrvc.genUsername().subscribe(
       (resp: UserGeneratorResponse) => {

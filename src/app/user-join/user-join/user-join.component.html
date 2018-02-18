@@ -5,11 +5,11 @@
     </header>
     <form [formGroup]="userJoinForm" (ngSubmit)="onSubmit($event)" class="card-body">
       <div class="form-group">
-        <label for="join-form_username-{{id}}">Username</label>
+        <label for="join-form_username-{{compId}}">Username</label>
         <button class="btn btn-link btn-sm pull-right" (click)="setRandomUsername($event)">Generate
           <i class="fa fa-refresh fa-spin" *ngIf="isGeneratingUsername"></i>
         </button>
-        <input type="text" formControlName="username" id="join-form_username-{{id}}" class="form-control">
+        <input type="text" formControlName="username" id="join-form_username-{{compId}}" class="form-control">
         <div *ngIf="userJoinForm.controls.username.errors && userJoinForm.controls.username.errors.required" class="invalid-feedback">
           The username is required
         </div>
