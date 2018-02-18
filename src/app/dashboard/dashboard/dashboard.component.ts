@@ -37,7 +37,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     public joinUrl: string;
 
-    private refreshInterval$: ISubscription;
     private userStoreSub$: ISubscription;
     private sessionStoreSub$: ISubscription;
 
@@ -82,10 +81,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
             },
             err => console.error(err)
         );
-
-        // this.refreshInterval$ = Observable.interval(5000).subscribe(
-        //     () => this.refreshUserList()
-        // );
     }
 
     defineJoinUrl() {
@@ -95,7 +90,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.refreshInterval$) { this.refreshInterval$.unsubscribe(); }
         this.userStoreSub$.unsubscribe();
         this.sessionStoreSub$.unsubscribe();
     }
