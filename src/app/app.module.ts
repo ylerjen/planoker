@@ -10,6 +10,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { EffectsModule } from '@ngrx/effects';
+import { QRCodeModule } from 'angular2-qrcode';
 
 import { environment } from '../environments/environment';
 import { appRoutes } from './router.config';
@@ -29,6 +30,7 @@ import { FooterComponent } from './common/footer/footer.component';
 import { GeneratorService } from './services/generator/generator.service';
 import { FirebaseService } from './services/firebase/firebase.service';
 import { UserItemComponent } from './dashboard/user-item/user-item.component';
+import { UserJoinComponent } from './user-join/user-join/user-join.component';
 
 @NgModule({
   declarations: [
@@ -43,17 +45,19 @@ import { UserItemComponent } from './dashboard/user-item/user-item.component';
     UserListComponent,
     PokerCardComponent,
     FooterComponent,
-    UserItemComponent
+    UserItemComponent,
+    UserJoinComponent
   ],
   imports: [
+    BrowserModule,
+    HttpModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only
     ),
     NgbModule.forRoot(),
     EffectsModule.forRoot([UserEffects]),
-    BrowserModule,
-    HttpModule,
+    QRCodeModule,
     StoreModule.forRoot(globalState),
     StoreDevtoolsModule.instrument({
       // for redux debug => storeDevtools instrument
