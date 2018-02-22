@@ -1,9 +1,10 @@
-<section class="user-item">
-  <h4 class="user-item-title"><span class="ready-state" [ngClass]="{on: user.isFrozen, off: !user.isFrozen }">&nbsp;</span> {{ user.username }}</h4>
+<section class="user-item" [ngClass]="{ ignored: user.isIgnored }">
+  <span class="ready-state" [ngClass]="{ on: user.isFrozen, off: !user.isFrozen }">&nbsp;</span>
+  <h4 class="user-item-title">{{ user.username }}</h4>
   <app-poker-card class="user-card"
-    [isFlipped]="!isRevealed"
+    [isFlipped]="!(!user.isIgnored && user.isRevealed)"
     [value]="user.vote"
-    [versoText]="(user.isFrozen) ? 'Ready !' : 'Voting...'"
+    [versoText]="(user.isFrozen) ? 'Ready !' : 'Voting ...'"
     size="small"
     ></app-poker-card>
 </section>

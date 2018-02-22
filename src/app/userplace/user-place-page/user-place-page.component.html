@@ -1,3 +1,4 @@
+{{session | json}}
 <section class="user-place-page mt-5" *ngIf="isPageReady">
   <form>
     <div class="form-group">
@@ -19,4 +20,8 @@
       versoText="Unvalidate your choice to change your vote"
       ></app-poker-card>
   </button>
+</section>
+<section class="fence" *ngIf="session.isRevealed">
+  <h1>Action restricted</h1>
+  <p>Wait until the planing master start the vote session.</p>
 </section>

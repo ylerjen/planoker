@@ -14,7 +14,7 @@ import {
   UPDATE_USER_START,
   UPDATE_USER_SUCCESS,
   UpdateUserAction,
-  InitUserAction
+  InitUserAction,
 } from '../actions/user.action';
 import { FirebaseService } from '../services/firebase/firebase.service';
 
@@ -60,21 +60,6 @@ export class UserEffects {
           catchError(() => of({ type: INIT_USER_STORE_FAILED }))
       )
     )
-  );
-
-  // Listen for the 'ADD_USER' action
-  @Effect() addUser$: Observable<Action> = this.actions$.pipe(
-    ofType(ADD_USER),
-    mergeMap(
-      action => {
-        // alert(ADD_USER);
-        return this.http.get('/').pipe(
-          // If successful, dispatch success action with result
-          map(data => ({ type: 'LOGIN_SUCCESS', payload: data })),
-          // If request fails, dispatch failed action
-          catchError(() => of({ type: 'LOGIN_FAILED' }))
-        );
-    })
   );
 
 }

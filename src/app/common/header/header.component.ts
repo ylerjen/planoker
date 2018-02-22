@@ -13,7 +13,7 @@ import { ISessionState } from '../../stores/reducers/session/session.reducer';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   public sessionId: string;
-  
+
   public username: string;
 
   public sessionStoreSubs$: ISubscription;

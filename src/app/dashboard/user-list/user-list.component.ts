@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-user-list',
@@ -12,5 +12,14 @@ export class UserListComponent {
 
   @Input()
   public isRevealed: boolean;
+
+  @Output()
+  public userItemClicked = new EventEmitter<string>();
+
+  onItemClick(evt: Event, username: string) {
+    evt.preventDefault();
+    console.log(username);
+    this.userItemClicked.emit(username);
+  }
 
 }

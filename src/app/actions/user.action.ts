@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { User } from '../models/User';
-import { VoteCommand } from '../models/FirebaseCommand';
+import { UserUpdateCommand } from '../models/FirebaseCommand';
 
 export const INIT_USER_STORE_START = 'INIT_USER_STORE_START';
 export const INIT_USER_STORE_SUCCESS = 'INIT_USER_STORE_SUCCESS';
@@ -22,7 +22,7 @@ export function initUserStore(sessionId: string) {
     };
 }
 
-export function updateUser(payload: VoteCommand): UpdateUserAction {
+export function updateUser(payload: UserUpdateCommand): UpdateUserAction {
     return {
         type: UPDATE_USER_START,
         payload
@@ -33,5 +33,5 @@ export interface InitUserAction extends Action {
 }
 
 export interface UpdateUserAction extends Action {
-    payload: VoteCommand;
+    payload: UserUpdateCommand;
 }

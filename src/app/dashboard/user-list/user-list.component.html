@@ -1,7 +1,9 @@
 <div class="container-fluid">
   <ul class="user-list row">
     <li *ngFor="let user of userlist" class="col">
-      <app-user-item [user]="user" [isRevealed]="isRevealed"></app-user-item>
+      <a href="" (click)="onItemClick($event, user.username)" class="item-selector">
+        <app-user-item [user]="user" [isRevealed]="isRevealed"></app-user-item>
+      </a>
     </li>
   </ul>
 </div>

@@ -3,7 +3,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/operators/map';
 
-import { JoinSessionCommand, VoteCommand } from '../../models/FirebaseCommand';
+import { UserUpdateCommand, JoinSessionCommand } from '../../models/FirebaseCommand';
 import { User } from '../../models/User';
 const sessionListNode = 'sessionlist';
 const userListNode = 'userlist';
@@ -71,10 +71,14 @@ export class FirebaseService {
             );
     }
 
-    storeUserUpdate(opts: VoteCommand): Observable<void> {
+    storeUserUpdate(opts: UserUpdateCommand): Observable<void> {
         const pathToUser = `${sessionListNode}/${opts.sessionId}/${userListNode}/${opts.username}`;
         const itemRef = this._fire.object(pathToUser);
-        return Observable.fromPromise(itemRef.update({ vote: opts.vote, isFrozen: opts.isFrozen }));
+        const updatedUser = Object.assign({}, opts);
+        delete updatedUser.sessionId;
+        delete updatedUser.username;
+        console.log(updatedUser);
+        return Observable.fromPromise(itemRef.update(updatedUser));
     }
 
     getUserListForSession(sessionId: string): Observable<Object> {

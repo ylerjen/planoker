@@ -6,8 +6,9 @@ import { ISubscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/interval';
 
 import { User } from '../../models/User';
+import { UserUpdateCommand } from '../../models/FirebaseCommand';
 import { IGlobalState } from '../../stores/app.state';
-import { initUserStore } from '../../actions/user.action';
+import { initUserStore, updateUser } from '../../actions/user.action';
 import { setSessionId, setRevealStatus } from '../../actions/session.action';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { ISessionState } from '../../stores/reducers/session/session.reducer';
@@ -55,7 +56,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ) { }
 
     get isReadyToReveal() {
-        return !this.userlist.some(u => !u.isFrozen);
+        return !this.userlist.some(u => !u.isFrozen && !u.isIgnored);
     }
 
     ngOnInit() {
@@ -139,5 +140,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.stats.nbOfQuestionMark = this.userlist.filter(
             v => v.vote === '❓'
         ).length;
+    }
+
+    onUserItemClick(username: string) {
+        const user = this.userlist.find(u => u.username === username);
+        user.isIgnored = !user.isIgnored;
+        const updateCmd = new UserUpdateCommand(user);
+        updateCmd.sessionId = this.session.sessionId;
+        this._store.dispatch(updateUser(updateCmd));
     }
 }

@@ -8,7 +8,7 @@ import { IUserlistState } from '../../stores/reducers/userlist/userlist.reducer'
 import { initUserStore } from '../../actions/user.action';
 import { initSessionStore } from '../../actions/session.action';
 import { IGlobalState } from '../../stores/app.state';
-import { VoteCommand } from '../../models/FirebaseCommand';
+import { UserUpdateCommand } from '../../models/FirebaseCommand';
 import { User } from '../../models/User';
 import { Session } from '../../models/Session';
 import { FirebaseService, votableValues } from '../../services/firebase/firebase.service';
@@ -84,7 +84,7 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
             const currUser = val.userList.find(u => u.username === this.session.username);
             if (currUser) {
                 this.currUser = currUser;
-                this.selectedValue = currUser.vote;
+                this.selectedValue = currUser.vote || '0';
                 this.isPageReady = true;
             }
         }
@@ -92,12 +92,12 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
 
     onClickFreeze($event: Event) {
         this.currUser.isFrozen = !this.currUser.isFrozen;
-        const voteCmd: VoteCommand = {
+        const voteCmd: UserUpdateCommand = new UserUpdateCommand({
             username: this.session.username,
             sessionId: this.session.sessionId,
             vote: this.selectedValue,
             isFrozen: this.currUser.isFrozen
-        };
+        });
         this._fireSrvc.storeUserUpdate(voteCmd);
     }
 

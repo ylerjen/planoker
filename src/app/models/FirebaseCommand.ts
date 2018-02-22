@@ -1,3 +1,5 @@
+import { User } from './User';
+
 export class JoinSessionCommand {
     sessionId: string;
     username: string;
@@ -8,9 +10,11 @@ export class ChangeSubjectCommand {
     subject: string;
 }
 
-export class VoteCommand {
-    sessionId: string;
-    username: string;
-    vote: string;
-    isFrozen: boolean;
+export class UserUpdateCommand extends User {
+    public sessionId: string;
+
+    constructor(props: { [key: string]: any } = {}) {
+        super(props);
+        this.sessionId = props.sessionId || '';
+    }
 }

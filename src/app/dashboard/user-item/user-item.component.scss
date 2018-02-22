@@ -1,20 +1,23 @@
 .user-item {
     border: 1px solid lightgrey;
+    border-radius: 8px;
     padding: 10px;
-    justify-content: center;
+    height: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
+    justify-content: flex-start;
 }
 .user-item-title {
     margin: .5em 0;
 }
 .ready-state {
     border-radius: 50%;
-    width: 28px;
+    box-shadow: 0 0 8px 2px grey;
     display: inline-block;
     margin: 10px;
+    height: 14px;
+    width: 14px;
 
     &.on {
       background-color: greenyellow;
@@ -24,4 +27,10 @@
       background-color: red;
     }
 
+}
+.ignored {
+    opacity: 0.3;
+}
+app-poker-card {
+    padding: 1rem 0;
 }
