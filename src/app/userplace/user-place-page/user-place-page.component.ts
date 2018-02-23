@@ -30,7 +30,7 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
 
     public selectableValues = votableValues;
 
-    private session: ISessionState;
+    public session: ISessionState;
 
     private _userlistStoreSubs$: ISubscription;
     private _sessionStoreSubs$: ISubscription;

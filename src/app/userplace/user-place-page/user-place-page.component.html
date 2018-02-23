@@ -21,7 +21,7 @@
       ></app-poker-card>
   </button>
 </section>
-<section class="fence" *ngIf="session.isRevealed">
+<section class="fence" *ngIf="session && session.isRevealed">
   <h1>Action restricted</h1>
   <p>Wait until the planing master start the vote session.</p>
 </section>
