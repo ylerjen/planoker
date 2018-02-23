@@ -2,7 +2,7 @@
   <span class="ready-state" [ngClass]="{ on: user.isFrozen, off: !user.isFrozen }">&nbsp;</span>
   <h4 class="user-item-title">{{ user.username }}</h4>
   <app-poker-card class="user-card"
-    [isFlipped]="!(!user.isIgnored && user.isRevealed)"
+    [isFlipped]="!(!user.isIgnored && isRevealed)"
     [value]="user.vote"
     [versoText]="(user.isFrozen) ? 'Ready !' : 'Voting ...'"
     size="small"
