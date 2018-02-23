@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { User } from '../../models/User';
 
 @Component({
   selector: 'app-user-list',
@@ -8,7 +9,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class UserListComponent {
 
   @Input()
-  public userlist: Array<Object>;
+  public userlist: Array<User>;
 
   @Input()
   public isRevealed: boolean;
