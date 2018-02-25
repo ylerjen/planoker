@@ -12,5 +12,5 @@ export class Session {
 
 export interface IRevealStatusCommand {
     sessionId: string;
-    isRevealedState: boolean;
+    isRevealed: boolean;
 }

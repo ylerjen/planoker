@@ -42,7 +42,7 @@ export function sessionReducer(state: ISessionState = initialState, action: Acti
 
         case ESessionActionsType.SetRevealedStatus:
             const actionWithRevealStatusPayload = action as ISetRevealedStatusAction;
-            return Object.assign({}, state, { isRevealed: actionWithRevealStatusPayload.payload });
+            return Object.assign({}, state, { isRevealed: actionWithRevealStatusPayload.payload.isRevealed });
 
         case ESessionActionsType.SetRevealedStatusSuccess:
         case ESessionActionsType.InitSessionFailed:
