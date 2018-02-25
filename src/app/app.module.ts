@@ -16,6 +16,7 @@ import { environment } from '../environments/environment';
 import { appRoutes } from './router.config';
 import { globalState } from './stores/app.state';
 import { UserEffects } from './effects/user.effect';
+import { SessionEffects } from './effects/session.effect';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home/home-page/home-page.component';
 import { SessionPageComponent } from './dashboard/session-page/session-page.component';
@@ -56,7 +57,10 @@ import { UserJoinComponent } from './user-join/user-join/user-join.component';
       { enableTracing: false } // <-- debugging purposes only
     ),
     NgbModule.forRoot(),
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot([
+      UserEffects,
+      SessionEffects
+    ]),
     QRCodeModule,
     StoreModule.forRoot(globalState),
     StoreDevtoolsModule.instrument({
