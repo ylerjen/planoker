@@ -1,17 +1,17 @@
-import { UserGeneratorResponse } from "../../models/UserGeneratorResponse";
-import { Component, OnInit } from "@angular/core";
-import { Validators, FormGroup, FormBuilder } from "@angular/forms";
-import { GeneratorService } from "../../services/generator/generator.service";
-import { JoinSessionCommand } from "../../models/FirebaseCommand";
-import { ActivatedRoute, Params, Router } from "@angular/router";
-import { Store } from "@ngrx/store";
-import { IGlobalState } from "../../stores/app.state";
-import { initSessionStore } from "../../actions/session.action";
+import { UserGeneratorResponse } from '../../models/UserGeneratorResponse';
+import { Component, OnInit } from '@angular/core';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { GeneratorService } from '../../services/generator/generator.service';
+import { JoinSessionCommand } from '../../models/FirebaseCommand';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { IGlobalState } from '../../stores/app.state';
+import { initSessionStore } from '../../actions/session.action';
 
 @Component({
-  selector: "app-user-join",
-  templateUrl: "./user-join.component.html",
-  styleUrls: ["./user-join.component.scss"]
+  selector: 'app-user-join',
+  templateUrl: './user-join.component.html',
+  styleUrls: ['./user-join.component.scss']
 })
 export class UserJoinComponent implements OnInit {
   public compId: string;
