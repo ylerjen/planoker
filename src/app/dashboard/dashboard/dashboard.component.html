@@ -12,6 +12,7 @@
     <h2>User list</h2>
     <p class="text-muted">Click the user card to ignore the participant.</p>
     <app-user-list [userlist]="userlist" [isRevealed]="session.isRevealed" (userItemClicked)="onUserItemClick($event)"></app-user-list>
+    
     <div class="text-center" *ngIf="userlist && userlist.length">
       <button class="btn btn-primary" (click)="revealVotes($event)" [disabled]="!isReadyToReveal">
           <span *ngIf="!session.isRevealed">Reveal votes !</span>

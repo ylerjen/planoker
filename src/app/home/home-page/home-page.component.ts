@@ -34,7 +34,7 @@ export class HomePageComponent implements OnInit {
                 (resp) => {
                     console.log(resp);
                     createSub$.unsubscribe();
-                    this._store.dispatch(initSessionStore(opts));
+                    this._store.dispatch(initSessionStore(opts.sessionId)); // FIXME this should be a joinSessionAction
                     this._router.navigate([`/session/${opts.sessionId}/user/${opts.username}`]);
                 },
                 (err) => alert(err)

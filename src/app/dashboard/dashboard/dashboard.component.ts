@@ -5,14 +5,14 @@ import { Observable } from 'rxjs/Observable';
 import { ISubscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/interval';
 
-import { User } from '../../models/User';
 import { UserUpdateCommand } from '../../models/FirebaseCommand';
+import { User } from '../../models/User';
+import { Session, IRevealStatusCommand } from '../../models/Session';
 import { IGlobalState } from '../../stores/app.state';
+import { ISessionState } from '../../stores/reducers/session/session.reducer';
 import { initUserStore, updateUser } from '../../actions/user.action';
 import { setSessionId, setRevealStatus } from '../../actions/session.action';
 import { FirebaseService } from '../../services/firebase/firebase.service';
-import { ISessionState } from '../../stores/reducers/session/session.reducer';
-import { Session } from '../../models/Session';
 
 
 class Stats {
@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     public isLoading: boolean;
 
-    public session: ISessionState = new Session();
+    public session: ISessionState;
 
     public userlist: Array<User> = [];
 
@@ -55,8 +55,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
         private _store: Store<IGlobalState>
     ) { }
 
-    get isReadyToReveal() {
-        return !this.userlist.some(u => !u.isFrozen && !u.isIgnored);
+    get isReadyToReveal(): Boolean {
+        // no invalid element
+        const hasInvalid = this.userlist
+            .some(u => !u.isFrozen && !u.isIgnored);
+
+        // at least 1 valid element
+        const hasValid = this.userlist
+            .some(u => u.isFrozen && !u.isIgnored);
+
+        return hasValid && !hasInvalid;
     }
 
     ngOnInit() {
@@ -70,7 +78,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         this.sessionStoreSub$ = this._store.select('sessionState')
             .subscribe((sessionState: ISessionState) => {
-                this.session = new Session(sessionState);
+                this.session = sessionState;
                 this.defineJoinUrl();
             });
 
@@ -113,7 +121,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
             return;
         }
         this.setStats();
-        this._store.dispatch(setRevealStatus(!this.session.isRevealed));
+        const revealCmd: IRevealStatusCommand = {
+            sessionId: this.session.sessionId,
+            isRevealedState: !this.session.isRevealed
+        };
+        this._store.dispatch(setRevealStatus(revealCmd));
     }
 
     /**
@@ -121,8 +133,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
      */
     setStats() {
         const arrOfNbOnly = this.userlist
-            .map(u => +u.vote)
-            .filter(v => !Object.is(NaN, v));
+            .filter((v: User) => !v.isIgnored && v.vote !== '' && !isNaN(+v.vote))
+            .map((u: User) => +u.vote);
         if (arrOfNbOnly.length === 0) {
             this.stats.avg = NaN;
             this.stats.max = NaN;
@@ -142,7 +154,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
         ).length;
     }
 
+    /**
+     * Executed when clicking on a user item
+     * @param username - the username on which the card was clicked
+     */
     onUserItemClick(username: string) {
+        if (this.session.isRevealed) {
+            return;
+        }
         const user = this.userlist.find(u => u.username === username);
         user.isIgnored = !user.isIgnored;
         const updateCmd = new UserUpdateCommand(user);

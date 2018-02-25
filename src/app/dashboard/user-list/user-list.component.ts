@@ -19,7 +19,6 @@ export class UserListComponent {
 
   onItemClick(evt: Event, username: string) {
     evt.preventDefault();
-    console.log(username);
     this.userItemClicked.emit(username);
   }
 

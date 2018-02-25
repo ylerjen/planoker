@@ -22,27 +22,48 @@ export function userlistReducer(state: IUserlistState = initialState, action: Un
     switch (action.type) {
         case INIT_USER_STORE_START:
         case UPDATE_USER_START:
-            return Object.assign({ isLoading: true }, state);
+            return Object.assign(
+                { isLoading: true },
+                state
+            );
 
         case INIT_USER_STORE_FAILED:
         case UPDATE_USER_FAILED:
-            return Object.assign({ isLoading: false }, state);
+            return Object.assign(
+                { isLoading: false },
+                state
+            );
 
         case INIT_USER_STORE_SUCCESS:
-            return Object.assign({}, { isLoading: false, userList: action.payload });
+            return Object.assign(
+                {},
+                { isLoading: false, userList: action.payload }
+            );
 
         case ADD_USER:
-            return Object.assign({}, state, {userList: [...state.userList, action.payload]});
+            return Object.assign(
+                {},
+                state,
+                { isLoading: false, userList: [...state.userList, action.payload]}
+            );
 
         case UPDATE_USER_SUCCESS:
             const user = action.payload as User;
-            const userListUpdated = state.userList.filter( u => u.username !== user.username);
-            return Object.assign({}, state, { userList: [...userListUpdated, user] });
+            const userListUpdated = state.userList.map( u => (u.username !== user.username) ? u : user);
+            return Object.assign(
+                {},
+                state,
+                { userList: userListUpdated }
+            );
 
         case REMOVE_USER:
             const userToDelete = action.payload as User;
             const userList = state.userList.filter( u => u.username !== user.username);
-            return Object.assign({}, state, { userList });
+            return Object.assign(
+                {},
+                state,
+                { userList }
+            );
 
         default:
             return state;

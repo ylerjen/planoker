@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { ISubscription } from 'rxjs/Subscription';
 
 import { IGlobalState } from '../../stores/app.state';
-import { ISubscription } from 'rxjs/Subscription';
 import { ISessionState } from '../../stores/reducers/session/session.reducer';
 
 @Component({
@@ -26,7 +26,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.sessionStoreSubs$ = this._store
       .select('sessionState')
       .subscribe( (sessionState: ISessionState) => {
-        console.log(sessionState);
         this.sessionId = sessionState.sessionId;
         this.username = sessionState.username;
       });

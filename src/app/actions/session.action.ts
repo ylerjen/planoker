@@ -1,47 +1,57 @@
 import { Action } from '@ngrx/store';
+import { IRevealStatusCommand } from '../models/Session';
 import { ISessionState } from '../stores/reducers/session/session.reducer';
 
 export interface IInitSessionStartAction extends Action {
+    payload: string;
+}
+
+export interface IInitSessionSuccessAction extends Action {
     payload: ISessionState;
 }
+
 export interface ISetSessionIdOrUsernameAction extends Action {
     payload: string;
 }
 export interface ISetRevealedStatusAction extends Action {
-    payload: boolean;
+    payload: IRevealStatusCommand;
 }
 
-export enum ESessionActions {
+export enum ESessionActionsType {
     InitSessionStart = 'InitSessionStart',
+    InitSessionSuccess = 'InitSessionSuccess',
+    InitSessionFailed = 'InitSessionFailed',
     SetUsername = 'SetUsername',
     SetSessionId = 'SetSessionId',
     SetRevealedStatus = 'SetRevealedStatus',
+    SetRevealedStatusSuccess = 'SetRevealedStatusSuccess',
+    SetRevealedStatusFailed = 'SetRevealedStatusFailed'
 }
 
-export function initSessionStore(payload: ISessionState): IInitSessionStartAction {
+export function initSessionStore(payload: string): IInitSessionStartAction {
     return {
-        type: ESessionActions.InitSessionStart,
+        type: ESessionActionsType.InitSessionStart,
         payload
     };
 }
 
 export function setSessionId(sessionId: string) {
     return {
-        type: ESessionActions.SetSessionId,
+        type: ESessionActionsType.SetSessionId,
         payload: sessionId
     };
 }
 
-export function setUsername(username: string) {
+export function setSessionUsername(username: string) {
     return {
-        type: ESessionActions.SetUsername,
+        type: ESessionActionsType.SetUsername,
         payload: username
     };
 }
 
-export function setRevealStatus(isRevealed: boolean) {
+export function setRevealStatus(revealCmd: IRevealStatusCommand) {
     return {
-        type: ESessionActions.SetRevealedStatus,
-        payload: isRevealed
+        type: ESessionActionsType.SetRevealedStatus,
+        payload: revealCmd
     };
 }
