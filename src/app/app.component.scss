@@ -1,3 +1,9 @@
+.app-bloc {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .main-content {
     padding-bottom: 50px;
 }
