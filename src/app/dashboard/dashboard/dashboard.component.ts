@@ -117,15 +117,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     revealVotes(evt: Event) {
         evt.preventDefault();
 
-        if (!this.isReadyToReveal) {
-            return;
+        if (this.session.isRevealed || this.isReadyToReveal) {
+            this.setStats();
+            const revealCmd: IRevealStatusCommand = {
+                sessionId: this.session.sessionId,
+                isRevealed: !this.session.isRevealed
+            };
+            this._store.dispatch(setRevealStatus(revealCmd));
         }
-        this.setStats();
-        const revealCmd: IRevealStatusCommand = {
-            sessionId: this.session.sessionId,
-            isRevealedState: !this.session.isRevealed
-        };
-        this._store.dispatch(setRevealStatus(revealCmd));
     }
 
     /**
