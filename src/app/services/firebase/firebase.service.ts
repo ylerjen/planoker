@@ -99,7 +99,7 @@ export class FirebaseService {
     setRevealSessionState(revealStateCmd: IRevealStatusCommand): Observable<void> {
         const pathToSession = `${sessionListNode}/${revealStateCmd.sessionId}`;
         const itemRef = this._fire.object(`${pathToSession}`);
-        return Observable.fromPromise(itemRef.update({ 'isRevealed': revealStateCmd.isRevealedState }));
+        return Observable.fromPromise(itemRef.update({ isRevealed: revealStateCmd.isRevealed }));
     }
 
 }
