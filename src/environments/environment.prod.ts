@@ -1,5 +1,8 @@
+const { version: appVersion } = require('../../package.json');
+
 export const environment = {
   production: true,
+  version: appVersion,
   firebase: {
     apiKey: 'AIzaSyB5nZUAzoRW5Ch-pQbDDmeTL0CDL9GjUYs',
     authDomain: 'planoker-5199b.firebaseapp.com',
