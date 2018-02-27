@@ -10,15 +10,21 @@
   </section>
   <section class="mt-5">
     <h2>User list</h2>
-    <p class="text-muted">Click the user card to ignore the participant.</p>
-    <app-user-list [userlist]="userlist" [isRevealed]="session.isRevealed" (userItemClicked)="onUserItemClick($event)"></app-user-list>
-    
-    <div class="text-center" *ngIf="userlist && userlist.length">
-      <button class="btn btn-primary" (click)="revealVotes($event)" [disabled]="!isReadyToReveal">
+    <div *ngIf="userlist.length > 0;else foreverAlone">
+      <p class="text-muted">Click the user card to ignore the participant.</p>
+      <app-user-list [userlist]="userlist" [isRevealed]="session.isRevealed" (userItemClicked)="onUserItemClick($event)"></app-user-list>
+
+      <div class="text-center" *ngIf="userlist && userlist.length">
+        <button class="btn btn-primary" (click)="revealVotes($event)" [disabled]="!isReadyToReveal">
           <span *ngIf="!session.isRevealed">Reveal votes !</span>
           <span *ngIf="session.isRevealed">Back to voting session !</span>
-      </button>
+        </button>
+      </div>
     </div>
+    <ng-template  #foreverAlone>
+      <p>It seems that nobody is connected...</p>
+      <img src="assets/forever-alone.png" alt="Forever alone">
+    </ng-template >
   </section>
   <section class="stats" *ngIf="session.isRevealed">
     <h3>Stats</h3>
