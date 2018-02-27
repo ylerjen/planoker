@@ -29,11 +29,8 @@ export class FirebaseService {
     }
 
     fetchUserInfo(sessionId: string, username: string): Observable<User> {
-        return this._fire
-            .object(
-            `${sessionListNode}/${sessionId}/${userListNode}/${username}`
-            )
-            .valueChanges()
+        const pathToUser = `${sessionListNode}/${sessionId}/${userListNode}/${username}`;
+        return this._fire.object(pathToUser).valueChanges()
             .map(userValues => {
                 const u = new User(userValues);
                 u.username = username;
@@ -102,4 +99,13 @@ export class FirebaseService {
         return Observable.fromPromise(itemRef.update({ isRevealed: revealStateCmd.isRevealed }));
     }
 
+    deleteUserFromSession(sessionId: string, username: string) {
+        if (!sessionId || !username) {
+            return;
+        }
+        const pathToUser = `${sessionListNode}/${sessionId}/${userListNode}/${username}`;
+        const itemRef = this._fire.object(pathToUser);
+        itemRef.remove();
+        debugger;
+    }
 }
