@@ -25,7 +25,7 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
 
     public currUser = new User();
 
-    public selectedValue: string;
+    public selectedValue: string = questionMarkValue;
 
     public selectableValues = votableValues;
 
