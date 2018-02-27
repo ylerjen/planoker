@@ -8,5 +8,5 @@ import { environment } from '../../../environments/environment';
 })
 export class FooterComponent {
 
-  public appVersion = environment.version;
+  public appVersion = '0.0.1-beta01'; // environment.version;
 }
