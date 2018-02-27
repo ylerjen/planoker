@@ -106,6 +106,5 @@ export class FirebaseService {
         const pathToUser = `${sessionListNode}/${sessionId}/${userListNode}/${username}`;
         const itemRef = this._fire.object(pathToUser);
         itemRef.remove();
-        debugger;
     }
 }
