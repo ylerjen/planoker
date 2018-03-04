@@ -94,7 +94,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     defineJoinUrl() {
         this.joinUrl = (this.session && this.session.sessionId)
-            ? window.location.origin + `/session/${this.session.sessionId}/user`
+            ? window.location.origin + `/session/${this.session.sessionId}/join`
             : '';
     }
 

@@ -8,7 +8,7 @@ import { UserJoinComponent } from './user-join/user-join/user-join.component';
 export const appRoutes: Routes = [
     { path: '', component: HomePageComponent },
     { path: 'session/:sid', pathMatch: 'full', component: DashboardComponent },
-    { path: 'session/:sid/user', pathMatch: 'full', component: UserJoinComponent },
+    { path: 'session/:sid/join', pathMatch: 'full', component: UserJoinComponent },
     { path: 'session/:sid/user/:uid', component: UserPlacePageComponent },
     { path: '**', redirectTo: '/' }
 ];
