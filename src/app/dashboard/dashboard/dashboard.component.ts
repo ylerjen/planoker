@@ -12,7 +12,6 @@ import { IGlobalState } from '../../stores/app.state';
 import { ISessionState } from '../../stores/reducers/session/session.reducer';
 import { initUserStore, updateUser } from '../../actions/user.action';
 import { setSessionId, setRevealStatus } from '../../actions/session.action';
-import { FirebaseService } from '../../services/firebase/firebase.service';
 
 
 class Stats {
@@ -51,7 +50,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     constructor(
         private _route: ActivatedRoute,
-        private _fireSrvc: FirebaseService,
         private _store: Store<IGlobalState>
     ) { }
 
