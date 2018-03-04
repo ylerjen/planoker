@@ -28,16 +28,6 @@ export class FirebaseService {
         return this._fire.object(`${sessionListNode}/${sessionId}`).valueChanges();
     }
 
-    fetchUserInfo(sessionId: string, username: string): Observable<User> {
-        const pathToUser = `${sessionListNode}/${sessionId}/${userListNode}/${username}`;
-        return this._fire.object(pathToUser).valueChanges()
-            .map(userValues => {
-                const u = new User(userValues);
-                u.username = username;
-                return u;
-            });
-    }
-
     createSessionWithUser(opts: JoinSessionCommand): Observable<void> {
         const pathToSessionList = `${sessionListNode}`;
         return this._fire.object(pathToSessionList).valueChanges()
@@ -49,6 +39,7 @@ export class FirebaseService {
                     const itemRef = this._fire.object(`${pathToSessionList}/${opts.sessionId}`);
                     const sessionInitialObj = {
                         isRevealed: false,
+                        createdAt: Date.now(),
                         [`userlist/${opts.username}/isFrozen`]: false
                     };
                     itemRef.update(sessionInitialObj);
