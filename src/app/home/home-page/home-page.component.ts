@@ -32,12 +32,11 @@ export class HomePageComponent implements OnInit {
         const createSub$ = this._firebSrvc.createSessionWithUser(opts)
             .subscribe(
                 (resp) => {
-                    console.log(resp);
                     createSub$.unsubscribe();
                     this._store.dispatch(initSessionStore(opts.sessionId)); // FIXME this should be a joinSessionAction
                     this._router.navigate([`/session/${opts.sessionId}/user/${opts.username}`]);
                 },
-                (err) => alert(err)
+                err => alert(err)
             );
     }
 
@@ -45,10 +44,9 @@ export class HomePageComponent implements OnInit {
         this._firebSrvc.joinSession(opts)
             .subscribe(
                 (resp) => {
-                    console.log(resp);
                     this._router.navigate([`/session/${opts.sessionId}/user/${opts.username}`]);
                 },
-                (err) => console.error(err)
+                err => alert(err)
             );
     }
 }
