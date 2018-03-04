@@ -76,7 +76,7 @@ export class UserPlacePageComponent implements OnInit, OnDestroy {
      * @param val - the current userlist state from the store
      */
     refreshValuesFromStore() {
-        if (!this.session.sessionId || !this.session.username) {
+        if ( !(this.session.sessionId && this.session.username)) {
             return;
         }
         const currUser = this._userList.find(u => u.username === this.session.username);
